@@ -8,9 +8,9 @@ module.exports = {
     },
     
     addNew: (req, res) => {
-        const{name, address, city, state, zipcode} = req.body
+        const{name, address, city, state, zipcode, img, mortgage, rent} = req.body
         const db = req.app.get('db')
-        db.add_new(name, address, city, state, zipcode)
+        db.add_new(name, address, city, state, zipcode, img, mortgage, rent)
         .then(res.sendStatus(200))
         .catch(err => console.log(err))
     },

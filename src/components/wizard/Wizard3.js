@@ -80,14 +80,15 @@ class Wizard3 extends React.Component{
                 <Link to='/wizard/step2'>
                     <button>Previous Step</button>
                 </Link>
-{/* 
-                <Link to='/'>
-                    
-                </Link> */}
-                <button
+
+                 <Link to='/'>
+                    <button
                         // onClick={() => this.props.sendPart3(this.state.mortgage, this.state.rent)}
                         onClick={()=> this.addNew()}
-                >Complete</button>
+                    >Complete</button>
+                    
+                 </Link>
+                
 
             </div>
 

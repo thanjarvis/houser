@@ -26,6 +26,7 @@ class Dashboard extends React.Component{
                 houseList: res.data
             })
         )
+        
         .catch(err => console.log(err, 'problems with front end get all'))          
     }
 
@@ -40,12 +41,11 @@ class Dashboard extends React.Component{
         
         return(
             <div>
-                Dashboard
                 <Link to='/wizard/step1'>
                     <button>Add New Property</button>
                 </Link>
 
-                <div>
+                <div id='house-holder'>
                     {this.state.houseList.map((element) => {
                         return(
                             <House
