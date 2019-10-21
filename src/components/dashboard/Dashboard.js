@@ -49,6 +49,7 @@ class Dashboard extends React.Component{
                     {this.state.houseList.map((element) => {
                         return(
                             <House
+                                key={element.id}
                                 id={element.id}
                                 img={element.img}
                                 name={element.name}

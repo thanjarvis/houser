@@ -2,7 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import{Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {getAll} from '../../ducks/reducer'
+import {getAll, sendPart3, setToDashboard} from '../../ducks/reducer'
+import {Redirect} from 'react-router-dom'
+
 
 
 class Wizard3 extends React.Component{
@@ -11,16 +13,17 @@ class Wizard3 extends React.Component{
         this.state = {
             mortgage: 0,
             rent: 0,
-            reduxState: {}
+            toDashboard: false,
+            dbPromise: null
         }
     }
 
-    componentDidMount = () => {
-        let test = this.props.getAll()
-        this.setState({
-            reduxState: test.payload
-        })
-    }
+    // componentDidMount = () => {
+    //     let test = this.props.getAll()
+    //     this.setState({
+    //         reduxState: test.payload
+    //     })
+    // }
 
     handleChange = (e) => {
         let {name} = e.target
@@ -29,20 +32,34 @@ class Wizard3 extends React.Component{
         })
     }
 
+    sendPart3 =() => {
+        this.props.sendPart3(this.state.mortgage, this.state.rent)
+    }
+
 
     addNew = () => {
-        const name = this.state.name
-        const address = this.state.address
-        const city = this.state.city
-        const state = this.state.state
-        const zipcode = this.state.zipcode
-
-        axios.post('/api/addNew', {name, address, city, state, zipcode})
-
+        this.sendPart3()
     }
 
 
     render(){
+        // HERE//////////////////////////////////////////////////////////////////////you are trying to figure out how to get the page to change when they push the complete button. youre sending info back and forth trying to get it to only move over to the landing page once everything else has already been excecuted.....stuff sent to the db...
+        console.log('rendering wiz3 props', this.props.dbPromise, this.props.toDashboard);
+        console.log('rendering wiz3 state', this.state.dbPromise, this.state.toDashboard);
+
+        if (this.state.toDashboard === true) {
+            this.state.toDashboard = false
+            this.state.dbPromise = null
+            return <Redirect to='/' />
+          }
+        if(this.state.dbPromise !== null){
+            this.props.dbPromise.then(
+                () => {
+                    setToDashboard(true)
+                }
+            )
+        }
+        
         return(
             <div>
                 <input
@@ -63,12 +80,14 @@ class Wizard3 extends React.Component{
                 <Link to='/wizard/step2'>
                     <button>Previous Step</button>
                 </Link>
-
+{/* 
                 <Link to='/'>
-                    <button
+                    
+                </Link> */}
+                <button
+                        // onClick={() => this.props.sendPart3(this.state.mortgage, this.state.rent)}
                         onClick={()=> this.addNew()}
-                    >Complete</button>
-                </Link>
+                >Complete</button>
 
             </div>
 
@@ -78,11 +97,13 @@ class Wizard3 extends React.Component{
 }
 
 function mapToStateProps(state){
+    console.log('this is state. reducer', state.reducer);
+
     return{
         reducer: state.reducer
     }
 }
 
 export default connect(
-    mapToStateProps, {getAll}
+    mapToStateProps, {getAll, sendPart3, setToDashboard}
 ) (Wizard3)

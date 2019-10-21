@@ -15,6 +15,7 @@ app.delete('/api/deleteOne/:id', ctrl.deleteOne)
 
 
 
+// console.log('heres the connection string', CONNECTION_STRING);
 
 
 

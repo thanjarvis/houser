@@ -1,7 +1,7 @@
 import React from 'react'
 import{Link} from 'react-router-dom'
 import { connect } from 'react-redux'
-import {getAll} from '../../ducks/reducer'
+import {getAll, sendPart2} from '../../ducks/reducer'
 
 class Wizard2 extends React.Component{
     constructor(){
@@ -12,12 +12,13 @@ class Wizard2 extends React.Component{
         }
     }
 
-    componentDidMount = () => {
-        let test = this.props.getAll()
-        this.setState({
-            reduxState: test.payload
-        })
-    }
+    // componentDidMount = () => {
+    //     let test = this.props.getAll()
+    //     this.setState({
+    //         reduxState: test.payload
+    //     })
+    // }
+
 
 
     handleChange = (e) => {
@@ -41,7 +42,9 @@ class Wizard2 extends React.Component{
                     <button>Previous Step</button>
                 </Link>
                 <Link to='/wizard/step3'>
-                    <button>Next Step</button>
+                    <button
+                        onClick={() => this.props.sendPart2(this.state.img)}
+                    >Next Step</button>
                 </Link>
 
             </div>
@@ -58,5 +61,5 @@ function mapToStateProps(state){
 }
 
 export default connect(
-    mapToStateProps, {getAll}
+    mapToStateProps, {getAll, sendPart2}
 ) (Wizard2)

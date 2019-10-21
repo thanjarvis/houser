@@ -1,7 +1,7 @@
 import React from 'react'
 import{Link} from 'react-router-dom'
 import { connect } from 'react-redux'
-import {getAll} from '../../ducks/reducer'
+import {getAll, sendPart1} from '../../ducks/reducer'
 
 
 
@@ -18,13 +18,20 @@ class Wizard1 extends React.Component{
         }
     }
 
-    componentDidMount = () => {
-        let test = this.props.getAll()
-        this.setState({
-            reduxState: test.payload
-        })
-    }
-
+    // componentDidMount = () => {
+    //     let test = this.props.getAll()
+    //     console.log('this is test redux', test);
+    //     // test.payload.then(payload => {
+    //     //     console.log('this is payload', payload)
+    //     //     this.setState({
+    //     //         reduxState: payload
+    //     //     })
+    //     // })
+    //     this.setState({
+    //         reduxState: test.payload
+    //     })
+        
+    // }
 
     handleChange = (e) => {
         let {name} = e.target
@@ -34,7 +41,7 @@ class Wizard1 extends React.Component{
     }
 
     render(){
-        console.log(this.state.reduxState);
+        // console.log('this is the new redux state', this.state.reduxState);
         
         return(
             <div>
@@ -74,7 +81,9 @@ class Wizard1 extends React.Component{
                     onChange={e => this.handleChange(e)}
                 />
                 <Link to='/wizard/step2'>
-                    <button>Next Step</button>
+                    <button
+                        onClick={() => this.props.sendPart1(this.state.name, this.state.address, this.state.city, this.state.state, this.state.zipcode)}
+                    >Next Step</button>
                 </Link>
             </div>
 
@@ -85,11 +94,13 @@ class Wizard1 extends React.Component{
 
 
 function mapStateToProps(state){
+    
     return{
         reducer: state.reducer
+        
     }
 }
 
 export default connect(
-    mapStateToProps, {getAll}
+    mapStateToProps, {getAll, sendPart1}
 ) (Wizard1)

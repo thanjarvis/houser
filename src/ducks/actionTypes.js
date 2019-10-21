@@ -1,1 +1,5 @@
 export const GET_ALL = 'GET_ALL'
+export const SEND_PART1 = 'SEND_PART1'
+export const SEND_PART2 = 'SEND_PART2'
+export const SEND_PART3 = 'SEND_PART3' 
+export const SET_TO_DASHBOARD = 'SET_TO_DASHBOARD'
